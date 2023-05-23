@@ -1,14 +1,11 @@
 #include "shell.h"
-
 // Structure to store an alias
 typedef struct {
     char name[MAX_ALIAS_LENGTH];
     char value[MAX_ALIAS_LENGTH];
 } Alias;
-
 Alias alias_list[MAX_ALIASES]; // Array to store aliases
 int num_aliases = 0; // Counter for number of aliases
-
 void handle_alias(char *cmd) {
     if (cmd == NULL) {
         // Print all aliases
@@ -27,7 +24,6 @@ void handle_alias(char *cmd) {
                 *equal_sign = '\0'; // Replace '=' with null terminator
                 char *name = token;
                 char *value = equal_sign + 1;
-
                 // Find if the alias already exists
                 int alias_index = -1;
                 for (int i = 0; i < num_aliases; i++) {
@@ -36,7 +32,6 @@ void handle_alias(char *cmd) {
                         break;
                     }
                 }
-
                 // Add or update the alias
                 if (alias_index != -1) {
                     // Alias already exists, update its value
@@ -73,4 +68,3 @@ void handle_alias(char *cmd) {
         }
     }
 }
-

@@ -42,7 +42,8 @@ void handle_exec(char *command_path, char *args[]);
 void handle_exit(char *cmd);
 void handle_cd(char **tokens, int num_tokens, char *previous_dir, int *previous_dir_set);
 void handle_alias(char *cmd);
-void replace_string(char* str, const char* pos, int len, const char* value);
+/*void replace_string(char* str, const char* pos, int len, const char* value);*/
+void replace_string(char *str, char *pos, int len, char *value);
 void replace_variables(char *command);
 int get_last_command_status();
 void set_last_command_status(int status);

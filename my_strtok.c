@@ -2,7 +2,10 @@
 #include <string.h>
 
 // Function to replace a portion of a string with a new value
-void replace_string(char* str, const char* pos, int len, const char* value) {
+/*void replace_string(char *str, char *pos, int len, const char *value)*/
+
+/*void replace_string(char *str, char *pos, int len, char *value)
+{
     int value_len = strlen(value);
     int str_len = strlen(str);
     int replace_len = value_len - len;
@@ -17,7 +20,7 @@ void replace_string(char* str, const char* pos, int len, const char* value) {
     str_len += replace_len;
     str[str_len] = '\0';
 }
-
+*/
 char* my_strtok(char* str, const char* delim) {
     static char* next_token = NULL;
     char* token;
