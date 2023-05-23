@@ -46,6 +46,7 @@ void replace_string(char* str, const char* pos, int len, const char* value);
 void replace_variables(char *command);
 int get_last_command_status();
 void set_last_command_status(int status);
-char* trim_whitespace(char *str);
+char* trim_whitespace(char* str);
+
 
 #endif

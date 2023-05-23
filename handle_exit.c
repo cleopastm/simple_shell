@@ -22,8 +22,9 @@
 */
 
 void handle_exit(char *cmd) {
-    // Trim leading and trailing whitespaces from the command
+  // Trim leading and trailing whitespaces from the command
     char *trimmed_cmd = trim_whitespace(cmd);
+ 
 
     // Check if an exit status is provided
     if (strlen(trimmed_cmd) > 4) {
