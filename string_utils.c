@@ -10,11 +10,12 @@
 
 char *trim_whitespace(char *str)
 {
+	char *end;
 	while (isspace((unsigned char)*str))
 	{
 		str++;
 	}
-	char *end = str + strlen(str) - 1;
+	end = str + strlen(str) - 1;
 
 	while (end > str && isspace((unsigned char)*end))
 	{

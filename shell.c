@@ -12,7 +12,6 @@
 
 void replace_variables(char *command)
 {
-	int last_command_status = 0;
 	char *pos;
 	char variable[MAX_ALIAS_LENGTH];
 	char *value;
@@ -25,7 +24,7 @@ void replace_variables(char *command)
 	}
 	while ((pos = strstr(command, "$$")) != NULL)
 	{
-		snintf(variable, sizeof(variable), "%d", getpid());
+		snprintf(variable, sizeof(variable), "%d", getpid());
 		value = variable;
 		replace_string(command, pos, 2, value);
 	}
@@ -39,20 +38,22 @@ void replace_variables(char *command)
  * Return: o
  */
 
-int main(int ac, char **argv)
+int main(void) /*int ac, char **argv*/
 {
 	char *prompt = "#HomeShell:~ $ ";
 	char *cmd = NULL;
 	size_t len = 0;
 	ssize_t az;
 	int i;
-	char *err_msg = "No such file or directory";
+	/*char *err_msg = "No such file or directory";*/
 
 	while (1)
 	{
+		char *command_path;
+
 		write(STDOUT_FILENO, prompt, strlen(prompt));
 		az = getline(&cmd, &len, stdin);
-		char *command_path;
+		
 
 		if (az == -1)
 		{
@@ -63,7 +64,7 @@ int main(int ac, char **argv)
 		cmd[i] = '\0';
 		if (strncmp(cmd, "exit", 4) == 0)
 		{
-			char *arg = strtok(cmd + 4, " ");
+			/*char *arg = strtok(cmd + 4, " ");*/
 
 			handle_exit(cmd);
 		}
@@ -100,7 +101,7 @@ int main(int ac, char **argv)
 			}
 			args[i] = NULL;
 			replace_variables(cmd);
-			ommand_path = args[0];
+			command_path = args[0];
 			handle_exec(command_path, args);
 		}
 	}

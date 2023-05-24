@@ -9,7 +9,7 @@
 char *get_command_path(char *command)
 {
 	char *path = getenv("PATH");
-	char *dir, *token, *command_path;
+	char *token, *command_path;
 	int command_path_len;
 
 	command_path = malloc(sizeof(char) * MAX_PATH_LENGTH);

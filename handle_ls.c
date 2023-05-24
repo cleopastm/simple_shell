@@ -8,7 +8,7 @@
  * Return: void
  */
 
-void handle_ls(char **tokens, int num_tokens)
+void handle_ls(char **tokens /*int num_tokens*/)
 {
 	pid_t pid = fork();
 

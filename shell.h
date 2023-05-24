@@ -16,6 +16,16 @@
 #include <fcntl.h>
 #include <ctype.h>
 
+
+#define _ALIAS_H_
+
+#define MAX_ALIAS_LENGTH 100
+
+typedef struct {
+    char name[MAX_ALIAS_LENGTH];
+    char value[MAX_ALIAS_LENGTH];
+} Alias;
+
 #define READ_SIZE 1024
 #define BUFFER_SIZE 1024
 #define MAX_PATH_LENGTH 1024
@@ -35,7 +45,7 @@ typedef struct {
 
 extern int last_command_status;
 
-int main(int ac, char **argv);
+int main(void); /*int ac, char **argv);*/
 void parse_cmd(char *cmd, char **args);
 char *get_command_path(char *command);
 char *my_getline(void);
@@ -44,14 +54,14 @@ void print_env(void);
 char *my_strtok(char *str, const char *delim);
 void handle_exit(char *command);
 void parse_input(char *input);
-void handle_ls(char **tokens, int num_tokens);
+void handle_ls(char **tokens /*int num_tokens*/);
 void handle_exec(char *command_path, char *args[]);
 void handle_exit(char *cmd);
 void handle_cd(char **tokens, int num_tokens, char *previous_dir, int *previous_dir_set);
 void handle_alias(char *cmd);
 void replace_string(char *str, char *pos, int len, const char *value);
-void replace_variables(char *command, Variable *variables, int num_variables);
-/*void replace_variables(char *command);*/
+/*void replace_variables(char *command, Variable *variables, int num_variables);*/
+void replace_variables(char *command);
 int get_last_command_status();
 void set_last_command_status(int status);
 char* trim_whitespace(char* str);

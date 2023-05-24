@@ -32,7 +32,8 @@ void replace_string(char *str, char *pos, int len, const char *value)
 char *my_strtok(char *str, const char *delim)
 {
 	static char *next_token;
-	char *token;
+	 char *token_end = str + strcspn(str, delim);
+
 	/* If str is not provided, continue from the previous token */
 	if (str == NULL)
 		str = next_token;
@@ -42,7 +43,7 @@ char *my_strtok(char *str, const char *delim)
 	if (*str == '\0')
 		return (NULL);
 	/* Find the end of the token */
-	char *token_end = str + strcspn(str, delim);
+	token_end = str + strcspn(str, delim);	
 	/* If the token_end is not at the end of the string, replace it with null */
 	if (*token_end != '\0')
 	{
