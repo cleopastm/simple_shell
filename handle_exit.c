@@ -1,35 +1,25 @@
 #include "shell.h"
 
 /**
- * void handle_exit(char *command)
+ * handle_exit - handlinhg the exit command
+ * @cmd: a poinder to the commmand prompt
+ *
+ * Return: void
+ */
+
+void handle_exit(char *cmd)
 {
+	char *status_str = strtok(cmd, " ");
 
-	char *status_str = my_strtok(NULL, " ");
-	int status = 0;
-	
-	if (command != NULL) {
-		status = atoi(command);
-	}
-	else if (status_str != NULL)
+	status_str = strtok(NULL, " ");
+	if (status_str != NULL)
 	{
-        	status = atoi(status_str);
-        	exit(status);
+		int status = atoi(status_str);
+
+		exit(status);
 	}
-	else{
-	exit(EXIT_SUCCESS);
-    }
-}
-*/
-
-void handle_exit(char *cmd) {
-    // Trim leading and trailing whitespaces from the command
-    char *trimmed_cmd = trim_whitespace(cmd);
-
-    // Check if an exit status is provided
-    if (strlen(trimmed_cmd) > 4) {
-        int status = atoi(trimmed_cmd + 4);
-        exit(status);
-    } else {
-        exit(0);
-    }
+	else
+	{
+		exit(0);
+	}
 }

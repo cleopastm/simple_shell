@@ -1,40 +1,32 @@
 #include "shell.h"
 
+/**
+ * handle_exec - to handle excetions
+ * @command_path: pointer to path
+ * @args: array of arguments
+ * Return: void
+ */
+
 void handle_exec(char *command_path, char *args[])
 {
-	pid_t pid = fork();
+	pid_t child_pid;
+	int status;
 
-	if (strcmp(args[0], "echo") == 0 && args[1] != NULL && args[1][0] == '$')
+	child_pid = fork();
+	if (child_pid == -1)
 	{
-		char *variable = args[1] + 1; // Skip the '$' character
-		char *value = getenv(variable);
-		if (value != NULL)
-		{
-			write(STDOUT_FILENO, value, strlen(value));
-			write(STDOUT_FILENO, "\n", 1);
-		}
+		perror("fork");
+		exit(EXIT_FAILURE);
+	}
+	else if (child_pid == 0)
+	{
+		execvp(command_path, args);
+		perror(command_path);
+		exit(EXIT_FAILURE);
 	}
 	else
 	{
-		if (pid == -1)
-		{
-			perror("fork");
-			exit(EXIT_FAILURE);
-		}
-		else if (pid == 0)
-		{
-			// Child process
-			execv(command_path, args);
-			perror("execv");
-			exit(EXIT_FAILURE);
-		}
-		else
-		{
-			// Parent process
-			int status;
-			waitpid(pid, &status, 0);
-			// Set the exit status of the last command
-			set_last_command_status(WEXITSTATUS(status));
-		}
+		waitpid(child_pid, &status, 0);
+		set_last_command_status(WEXITSTATUS(status));
 	}
 }

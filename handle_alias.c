@@ -1,10 +1,11 @@
 #include "shell.h"
-// Structure to store an alias
-typedef struct {
-    char name[MAX_ALIAS_LENGTH];
-    char value[MAX_ALIAS_LENGTH];
-} Alias;
-Alias alias_list[MAX_ALIASES]; // Array to store aliases
+
+typedef struct
+{
+	char name[MAX_ALIAS_LENGTH];
+	char value[MAX_ALIAS_LENGTH];
+	Alias;
+	Alias alias_list[MAX_ALIASES]; // Array to store aliases
 int num_aliases = 0; // Counter for number of aliases
 void handle_alias(char *cmd) {
     if (cmd == NULL) {

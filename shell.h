@@ -14,6 +14,7 @@
 #include <signal.h>
 #include <stdarg.h>
 #include <fcntl.h>
+#include <ctype.h>
 
 #define READ_SIZE 1024
 #define BUFFER_SIZE 1024
@@ -25,6 +26,12 @@
 #define MAX_ALIAS_LENGTH 100
 #define MAX_ALIASES 50
 #define MAX_VARIABLE_LENGTH 100
+#define MAX_VARIABLES 50
+
+typedef struct {
+    char name[MAX_VARIABLE_LENGTH];
+    char value[MAX_VARIABLE_LENGTH];
+} Variable;
 
 extern int last_command_status;
 
@@ -42,11 +49,12 @@ void handle_exec(char *command_path, char *args[]);
 void handle_exit(char *cmd);
 void handle_cd(char **tokens, int num_tokens, char *previous_dir, int *previous_dir_set);
 void handle_alias(char *cmd);
-/*void replace_string(char* str, const char* pos, int len, const char* value);*/
-void replace_string(char *str, char *pos, int len, char *value);
-void replace_variables(char *command);
+void replace_string(char *str, char *pos, int len, const char *value);
+void replace_variables(char *command, Variable *variables, int num_variables);
+/*void replace_variables(char *command);*/
 int get_last_command_status();
 void set_last_command_status(int status);
-char* trim_whitespace(char *str);
+char* trim_whitespace(char* str);
+
 
 #endif
