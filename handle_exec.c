@@ -27,6 +27,6 @@ void handle_exec(char *command_path, char *args[])
 	else
 	{
 		waitpid(child_pid, &status, 0);
-		set_last_command_status(WEXITSTATUS(status));
+		/*set_last_command_status(WEXITSTATUS(status));*/
 	}
 }

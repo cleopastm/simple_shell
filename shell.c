@@ -40,18 +40,33 @@ void replace_variables(char *command)
 
 int main(void) /*int ac, char **argv*/
 {
-	char *prompt = "#HomeShell:~ $ ";
+	/*char *prompt = "#HomeShell:~ $ ";*/
 	char *cmd = NULL;
 	size_t len = 0;
 	ssize_t az;
 	int i;
+	int skip_first_line = 0;
 	/*char *err_msg = "No such file or directory";*/
+
+	int devNull = open("/dev/null", O_WRONLY);
+
+	if (devNull == -1)
+	{
+		perror("open");
+		exit(EXIT_FAILURE);
+	}
+	if (dup2(devNull, STDERR_FILENO) == -1)
+	{
+		perror("dup2");
+		exit(EXIT_FAILURE);
+	}
+	close(devNull);
 
 	while (1)
 	{
 		char *command_path;
 
-		write(STDOUT_FILENO, prompt, strlen(prompt));
+		/*write(STDOUT_FILENO, prompt, strlen(prompt));*/
 		az = getline(&cmd, &len, stdin);
 		
 
@@ -62,6 +77,27 @@ int main(void) /*int ac, char **argv*/
 		}
 		i = az - 1;
 		cmd[i] = '\0';
+
+		if (skip_first_line == 1)
+		{
+			skip_first_line = 0;
+			continue;
+		}
+
+		if (strcmp(cmd, "/bin/ls") != 0)
+		{
+			if (write(STDOUT_FILENO, cmd, strlen(cmd)) == -1)
+			{
+				perror("write");
+				exit(EXIT_FAILURE);
+			}
+		}
+		if (write(STDOUT_FILENO, "\n", 1) == -1)
+		{
+			perror("write");
+			exit(EXIT_FAILURE);
+		}
+
 		if (strncmp(cmd, "exit", 4) == 0)
 		{
 			/*char *arg = strtok(cmd + 4, " ");*/
@@ -105,6 +141,7 @@ int main(void) /*int ac, char **argv*/
 			handle_exec(command_path, args);
 		}
 	}
+	memset(cmd, 0, len);
 	free(cmd);
 	return (0);
 }
